@@ -55,11 +55,11 @@ public class Challenges {
     // Business methods
     /**
      * Determines if the player has the necessary skill to undertake the challenge.
-     * @param playerSkill the skill level of the player
+     * @param skillLevel the skill level of the player
      * @return true if the player's skill matches or exceeds the required skill, false otherwise
      */
-   /* public boolean checkEligibility(int playerSkill) {
-        return playerSkill.equals(skillRequired);
+    public boolean checkEligibility(int skillLevel) {
+        return skillLevel == skillRequired;
     }
 
     /**
