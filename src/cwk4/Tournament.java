@@ -14,6 +14,7 @@ public class Tournament implements CARE
    
     private String vizier;
     private int treasury;
+    private String filename;
     private ArrayList<Champion> championReserves;
 
 //**************** CARE ************************** 
@@ -35,7 +36,8 @@ public class Tournament implements CARE
      */  
     public Tournament(String viz, String filename)  //Task 3.5
     {
-      
+        this.vizier = viz;
+        this.filename = filename;
         
        setupChampions();
        readChallenges(filename);
@@ -54,7 +56,8 @@ public class Tournament implements CARE
      **/
     public String toString()
     {
-        String s = "\nVizier: " + vizier ;
+        String s = "\nVizier: " + vizier + "\nTreasury: " + treasury + "\nDefeated: " + isDefeated() +
+                "\nChampions: " + getTeam();
         
         return s;
     }
