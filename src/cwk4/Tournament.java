@@ -259,7 +259,16 @@ public class Tournament implements CARE
         championReserves.add(new Wizard("Krypton", 8, "fireballs", false));
         championReserves.add(new Wizard("Hedwig", 1, "flying", true));
    }
-     
+
+   private Champion getChampion(String name){
+        for (Champion champion : championReserves){
+            if (champion.getName().equals(name)){
+                return champion;
+            }
+        }
+        return null;
+   }
+
     private void setupChallenges()
     {
 
