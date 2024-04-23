@@ -15,6 +15,7 @@ public class Tournament implements CARE {
     private int treasury;
     private String filename;
     private ArrayList<Champion> championReserves;
+    private ArrayList<Challenges> challengesReserves;
 
 
 //**************** CARE ************************** 
