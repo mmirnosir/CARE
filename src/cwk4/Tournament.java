@@ -122,7 +122,7 @@ public class Tournament implements CARE {
      * @return true if champion in reserve, false otherwise
      */
     public boolean isInReserve(String nme) {
-        return championReserves.contains(nme);
+        return getReserve().contains(nme);
     }
  
     // ***************** Team champions ************************   
