@@ -298,7 +298,14 @@ public class Tournament implements CARE {
 
 
     }
-        
+    private Challenges getChallenges(int challengeNo) {
+        for (Challenges challange : challengesReserves) {
+            if (challange.getChallengeNo() == (challengeNo)) {
+                return challange;
+            }
+        }
+        return null;
+    }
     // Possible useful private methods
 //     private Challenge getAChallenge(int no)
 //     {

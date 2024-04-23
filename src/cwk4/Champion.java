@@ -35,4 +35,11 @@ public class Champion {
         }
     }
 
+    public String toString(){
+        return "Name: " + getName() +
+                "\nSKill level: " + getskillLevel() +
+                "\nEntry fee: " + getEntryFee() +
+                "Champion state: " + getState();
+    }
+
 }

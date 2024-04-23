@@ -14,4 +14,10 @@ public class Wizard extends Champion {
         return specialitySpell;
     }
 
+    public String toString(){
+        return super.toString() +
+                "Speciality spell: " + specialitySpell +
+                "Necromancer: " + isNecromancer;
+    }
+
 }
