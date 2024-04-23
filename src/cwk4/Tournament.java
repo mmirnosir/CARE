@@ -95,7 +95,7 @@ public class Tournament implements CARE {
         }
         else {
             for (Champion champ : championReserves) {
-                s += "\n" + champ;
+                s += "\n" + champ.getName();
             }
         }
         return s;
