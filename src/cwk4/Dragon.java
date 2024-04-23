@@ -7,4 +7,9 @@ public class Dragon extends Champion {
         super(name, 7, 500);
         this.isTalking = isTalking;
     }
+
+    public String toString(){
+        return super.toString() +
+                "Talking: " + isTalking;
+    }
 }

@@ -111,8 +111,8 @@ public class Tournament implements CARE {
      **/
     public String getChampionDetails(String nme)
     {
-       
-        return "\nNo such champion";
+        Champion champ = getChampion(nme);
+        return champ.toString();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Tournament implements CARE {
      * @return true if champion in reserve, false otherwise
      */
     public boolean isInReserve(String nme) {
-        return championReserves.contains(nme);
+        return getReserve().contains(nme);
     }
  
     // ***************** Team champions ************************   

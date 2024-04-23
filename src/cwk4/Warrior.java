@@ -9,4 +9,9 @@ public class Warrior extends Champion {
         this.weapon = weapon;
     }
 
+    public String toString(){
+        return super.toString() +
+                "Weapon: " + weapon;
+    }
+
 }
