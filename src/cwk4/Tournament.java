@@ -14,7 +14,7 @@ public class Tournament implements CARE
    
     private String vizier;
     private int treasury;
-
+    private ArrayList<Champion> championReserves;
 
 //**************** CARE ************************** 
     /** Constructor requires the name of the vizier
@@ -237,10 +237,23 @@ public class Tournament implements CARE
 
     //****************** private methods for Task 3 functionality*******************
     //*******************************************************************************
+
+
     private void setupChampions()
     {
-        
-
+        championReserves = new ArrayList<>();
+        championReserves.add(new Wizard("Ganfrank", 7, "transmutation", true));
+        championReserves.add(new Wizard("Rudolf", 6, "invisibility", true));
+        championReserves.add(new Warrior("Elblond", 150, "sword"));
+        championReserves.add(new Warrior("Flimsi", 200, "bow"));
+        championReserves.add(new Dragon("Drabina", false));
+        championReserves.add(new Dragon("Golum", true));
+        championReserves.add(new Warrior("Argon", 900, "mace"));
+        championReserves.add(new Wizard("Neon", 2, "translocation", false));
+        championReserves.add(new Dragon("Xenon", true));
+        championReserves.add(new Warrior("Atlanta", 500, "bow"));
+        championReserves.add(new Wizard("Krypton", 8, "fireballs", false));
+        championReserves.add(new Wizard("Hedwig", 1, "flying", true));
    }
      
     private void setupChallenges()
