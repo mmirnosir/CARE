@@ -111,8 +111,8 @@ public class Tournament implements CARE {
      **/
     public String getChampionDetails(String nme)
     {
-       
-        return "\nNo such champion";
+        Champion champ = getChampion(nme);
+        return champ.toString();
     }
 
     /**
