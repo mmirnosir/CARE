@@ -16,6 +16,7 @@ public class Tournament implements CARE
     private int treasury;
     private String filename;
     private ArrayList<Champion> championReserves;
+    private ArrayList<Challenges> challengesReserves;
 
 
 //**************** CARE ************************** 
@@ -262,6 +263,20 @@ public class Tournament implements CARE
      
     private void setupChallenges()
     {
+        challengesReserves = new ArrayList<>();
+        challengesReserves.add(new Challenges(1,ChallengeType.MAGIC,"Borg",3,100));
+        challengesReserves.add(new Challenges(2,ChallengeType.FIGHT,"Huns",3,120));
+        challengesReserves.add(new Challenges(3,ChallengeType.MYSTERY,"Ferengi",3,150));
+        challengesReserves.add(new Challenges(4,ChallengeType.MAGIC,"Vandal",9,200));
+        challengesReserves.add(new Challenges(5,ChallengeType.MYSTERY,"Borg",7,90));
+        challengesReserves.add(new Challenges(6,ChallengeType.FIGHT,"Goth",8,45));
+        challengesReserves.add(new Challenges(7,ChallengeType.MAGIC,"Frank ",10,200));
+        challengesReserves.add(new Challenges(8,ChallengeType.FIGHT,"Sith ",10,170));
+        challengesReserves.add(new Challenges(9,ChallengeType.MYSTERY,"Cardashian",9,300));
+        challengesReserves.add(new Challenges(10,ChallengeType.FIGHT,"Jute",2,300));
+        challengesReserves.add(new Challenges(11,ChallengeType.MAGIC,"Celt",2,250));
+        challengesReserves.add(new Challenges(12,ChallengeType.MYSTERY,"Celt",1,250));
+
 
 
     }
