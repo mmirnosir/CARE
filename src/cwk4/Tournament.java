@@ -17,6 +17,7 @@ public class Tournament implements CARE
     private String filename;
     private ArrayList<Champion> championReserves;
 
+
 //**************** CARE ************************** 
     /** Constructor requires the name of the vizier
      * @param viz the name of the vizier
@@ -38,7 +39,7 @@ public class Tournament implements CARE
     {
         this.vizier = viz;
         this.filename = filename;
-        
+
        setupChampions();
        readChallenges(filename);
     }
@@ -78,7 +79,7 @@ public class Tournament implements CARE
      */
     public int getMoney()
     {
-        return 0;
+        return this.treasury;
     }
     
     
@@ -164,7 +165,7 @@ public class Tournament implements CARE
     {
         String s = "************ Vizier's Team of champions********";
         
-       
+
         return s;
     }
     
