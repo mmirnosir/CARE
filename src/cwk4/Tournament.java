@@ -9,9 +9,8 @@ import java.io.*;
  * @version 
  */
 
-public class Tournament implements CARE
-{
-   
+public class Tournament implements CARE {
+
     private String vizier;
     private int treasury;
     private String filename;
@@ -19,47 +18,51 @@ public class Tournament implements CARE
 
 
 //**************** CARE ************************** 
-    /** Constructor requires the name of the vizier
+
+    /**
+     * Constructor requires the name of the vizier
+     *
      * @param viz the name of the vizier
-     */  
-    public Tournament(String viz)
-    {
+     */
+    public Tournament(String viz) {
         this.treasury = 1000;
 
-           setupChampions();
-           setupChallenges();
+        setupChampions();
+        setupChallenges();
     }
-    
-    /** Constructor requires the name of the vizier and the
+
+    /**
+     * Constructor requires the name of the vizier and the
      * name of the file storing challenges
-     * @param viz the name of the vizier
+     *
+     * @param viz      the name of the vizier
      * @param filename name of file storing challenges
-     */  
+     */
     public Tournament(String viz, String filename)  //Task 3.5
     {
         this.vizier = viz;
         this.filename = filename;
 
-       setupChampions();
-       readChallenges(filename);
+        setupChampions();
+        readChallenges(filename);
     }
-    
-    
-    /**Returns a String representation of the state of the game,
+
+
+    /**
+     * Returns a String representation of the state of the game,
      * including the name of the vizier, state of the treasury,
-     * whether defeated or not, and the champions currently in the 
+     * whether defeated or not, and the champions currently in the
      * team,(or, "No champions" if team is empty)
-     * 
+     *
      * @return a String representation of the state of the game,
      * including the name of the vizier, state of the treasury,
-     * whether defeated or not, and the champions currently in the 
+     * whether defeated or not, and the champions currently in the
      * team,(or, "No champions" if team is empty)
      **/
-    public String toString()
-    {
+    public String toString() {
         String s = "\nVizier: " + vizier + "\nTreasury: " + treasury + "\nDefeated: " + isDefeated() +
                 "\nChampions: " + getTeam();
-        
+
         return s;
     }
     
@@ -69,16 +72,14 @@ public class Tournament implements CARE
      * @returns true if Treasury <=0 and the vizier's team has no 
      * champions which can be retired. 
      */
-    public boolean isDefeated()
-    {
-        return false;
+    public boolean isDefeated() {
+        return this.treasury <= 0 && this.getReserve() == null;
     }
     
     /** returns the amount of money in the Treasury
      * @returns the amount of money in the Treasury
      */
-    public int getMoney()
-    {
+    public int getMoney() {
         return this.treasury;
     }
     
@@ -86,31 +87,41 @@ public class Tournament implements CARE
     /**Returns a String representation of all champions in the reserves
      * @return a String representation of all champions in the reserves
      **/
-    public String getReserve()
-    {   
-        String s = "************ Champions available in reserves********";
-        
+    public String getReserve() {
+        String s = "********** All champions *********";
+
+        if (championReserves.isEmpty()) {
+            return null;
+        }
+        else {
+            for (Champion champ : championReserves) {
+                s += "\n" + champ.getName();
+            }
+        }
         return s;
     }
-    
-        
-    /** Returns details of the champion with the given name. 
+
+
+    /**
+     * Returns details of the champion with the given name.
      * Champion names are unique.
+     *
      * @return details of the champion with the given name
      **/
     public String getChampionDetails(String nme)
     {
        
         return "\nNo such champion";
-    }    
-    
-    /** returns whether champion is in reserve
-    * @param nme champion's name
-    * @return true if champion in reserve, false otherwise
-    */
-    public boolean isInReserve(String nme)
-    {
-        return (false);
+    }
+
+    /**
+     * returns whether champion is in reserve
+     *
+     * @param nme champion's name
+     * @return true if champion in reserve, false otherwise
+     */
+    public boolean isInReserve(String nme) {
+        return championReserves.contains(nme);
     }
  
     // ***************** Team champions ************************   
@@ -123,10 +134,9 @@ public class Tournament implements CARE
      * -1 if there is no such champion 
      * @param nme represents the name of the champion
      * @return as shown above
-     **/        
-    public int enterChampion(String nme)
-    {
-        
+     **/
+    public int enterChampion(String nme) {
+
         return -1;
     }
         
@@ -136,8 +146,7 @@ public class Tournament implements CARE
      * @return returns true if the champion with the name
      * is in the vizier's team, false otherwise.
      **/
-    public boolean isInViziersTeam(String nme)
-    {
+    public boolean isInViziersTeam(String nme) {
         return false;
     }
     
@@ -271,6 +280,20 @@ public class Tournament implements CARE
 
     private void setupChallenges()
     {
+        challengesReserves = new ArrayList<>();
+        challengesReserves.add(new Challenges(1,ChallengeType.MAGIC,"Borg",3,100));
+        challengesReserves.add(new Challenges(2,ChallengeType.FIGHT,"Huns",3,120));
+        challengesReserves.add(new Challenges(3,ChallengeType.MYSTERY,"Ferengi",3,150));
+        challengesReserves.add(new Challenges(4,ChallengeType.MAGIC,"Vandal",9,200));
+        challengesReserves.add(new Challenges(5,ChallengeType.MYSTERY,"Borg",7,90));
+        challengesReserves.add(new Challenges(6,ChallengeType.FIGHT,"Goth",8,45));
+        challengesReserves.add(new Challenges(7,ChallengeType.MAGIC,"Frank ",10,200));
+        challengesReserves.add(new Challenges(8,ChallengeType.FIGHT,"Sith ",10,170));
+        challengesReserves.add(new Challenges(9,ChallengeType.MYSTERY,"Cardashian",9,300));
+        challengesReserves.add(new Challenges(10,ChallengeType.FIGHT,"Jute",2,300));
+        challengesReserves.add(new Challenges(11,ChallengeType.MAGIC,"Celt",2,250));
+        challengesReserves.add(new Challenges(12,ChallengeType.MYSTERY,"Celt",1,250));
+
 
 
     }
