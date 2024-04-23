@@ -14,6 +14,7 @@ public class Tournament implements CARE
    
     private String vizier;
     private int treasury;
+    private String filename;
 
 
 //**************** CARE ************************** 
@@ -35,7 +36,9 @@ public class Tournament implements CARE
      */  
     public Tournament(String viz, String filename)  //Task 3.5
     {
-      
+
+        this.vizier = viz;
+        this.filename = filename;
         
        setupChampions();
        readChallenges(filename);
@@ -54,7 +57,8 @@ public class Tournament implements CARE
      **/
     public String toString()
     {
-        String s = "\nVizier: " + vizier ;
+        String s = "\nVizier: " + vizier + "\nTreasury: " + treasury + "\nDefeated: " + isDefeated() +
+                    "\nChampions: " + getTeam();
         
         return s;
     }
@@ -75,7 +79,7 @@ public class Tournament implements CARE
      */
     public int getMoney()
     {
-        return 0;
+        return this.treasury;
     }
     
     
@@ -161,7 +165,7 @@ public class Tournament implements CARE
     {
         String s = "************ Vizier's Team of champions********";
         
-       
+
         return s;
     }
     
@@ -294,7 +298,8 @@ public class Tournament implements CARE
      */
    public void saveGame(String fname){
         // uses object serialisation 
-        
+
+
     }
  
 
