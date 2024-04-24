@@ -248,7 +248,7 @@ public class Tournament implements CARE {
              }
          }
          return false;
-     }    
+     }
    
     /** Provides a String representation of an challenge given by 
      * the challenge number
@@ -258,8 +258,12 @@ public class Tournament implements CARE {
      **/
     public String getChallenge(int num)
     {
-        
-        
+        for (Challenges challenge : challengesReserves) {
+            if (challenge.getChallengeNo() == num) {
+                // Return the string representation of the challenge
+                return challenge.toString();
+            }
+        }
         return "\nNo such challenge";
     }
     
