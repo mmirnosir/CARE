@@ -16,6 +16,7 @@ public class Tournament implements CARE {
     private String filename;
     private ArrayList<Champion> championReserves;
     private ArrayList<Challenges> challengesReserves;
+    private ArrayList<Champion> viziersTeam;
 
 
 //**************** CARE ************************** 
@@ -137,8 +138,20 @@ public class Tournament implements CARE {
      * @return as shown above
      **/
     public int enterChampion(String nme) {
+        int champsFee = getChampion(nme).getEntryFee();
 
-        return -1;
+        if (getMoney() >= champsFee) {
+            this.treasury -= champsFee;
+            viziersTeam.add(getChampion(nme));
+            return 0;
+        }
+        else if (getMoney() < champsFee) {
+            return 2;
+        }
+        else if (!isInReserve(nme)) {
+            return 1;
+        }
+        else return -1;
     }
         
      /** Returns true if the champion with the name is in 

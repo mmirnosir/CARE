@@ -25,14 +25,14 @@ public interface CARE extends Serializable
      **/
     public String toString();
     
-    
+
     /** returns true if Treasury <=0 and the vizier's team has no 
      * champions which can be retired. 
      * @returns true if Treasury <=0 and the vizier's team has no 
      * champions which can be retired. 
      */
     public boolean isDefeated();
-    
+
     /** returns the amount of money in the Treasury
      * @returns the amount of money in the Treasury
      */
