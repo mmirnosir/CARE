@@ -8,3 +8,5 @@ Magic,Franks,10,200,
 Fight,Sith,10,150, 
 Mystery,Cardashian,9,300
 Fight,Jute,2,300
+Magic,Celt,2,250
+Mystery,Celt,1,250
