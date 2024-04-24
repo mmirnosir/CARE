@@ -244,7 +244,12 @@ public class Tournament implements CARE {
      **/
      public boolean isChallenge(int num)
      {
-         return (false);
+         for (Challenges challenge : challengesReserves) {
+             if (challenge.getChallengeNo() == num) {
+                 return true;
+             }
+         }
+         return false;
      }    
    
     /** Provides a String representation of an challenge given by 
