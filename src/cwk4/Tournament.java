@@ -141,6 +141,8 @@ public class Tournament implements CARE {
     public int enterChampion(String nme) {
         int champsFee = getChampion(nme).getEntryFee();
 
+        viziersTeam = new ArrayList<>();
+
         if (getMoney() >= champsFee) {
             this.treasury -= champsFee;
             viziersTeam.add(getChampion(nme));

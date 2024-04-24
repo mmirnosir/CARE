@@ -45,9 +45,25 @@ public class GameUI
                     System.out.println(tr.getChampionDetails(ref));
                 } 
                 else if (choice == 4)
-                {   
-                    // provide code here
-                    // output should be meaningful
+                {
+
+                    System.out.println("Choose a champion: ");
+                    String champ = (myIn.nextLine()).trim();
+
+                    switch (tr.enterChampion(champ)) {
+                        case -1:
+                            System.out.println("[-] There's no such champion");
+                            break;
+                        case 0:
+                            System.out.println("[+] Champion has entered the viziers team");
+                            break;
+                        case 1:
+                            System.out.println("[-] Champion is not in reserve");
+                            break;
+                        case 2:
+                            System.out.println("[-] Not enough money in the treasury");
+                            break;
+                    }
 
                 }
                 else if (choice == 5)
