@@ -17,6 +17,7 @@ public class Tournament implements CARE {
     private ArrayList<Champion> championReserves;
     private ArrayList<Challenges> challengesReserves;
     private ArrayList<Champion> viziersTeam;
+    private ArrayList<Champion> disqualified;
 
 
 //**************** CARE ************************** 
@@ -203,6 +204,15 @@ public class Tournament implements CARE {
     public String getTeam()
     {
         String s = "************ Vizier's Team of champions********";
+        // Check if the vizier's team is empty
+        if (viziersTeam.isEmpty()) {
+            s += "\nNo champions entered";  // Append message if no champions are in the team
+        } else {
+            // Iterate through each champion in the team and append their details
+            for (Champion champion : viziersTeam) {
+                s += "\n" + champion.getName();  // Use Champion's toString() method
+            }
+        }
 
         return s;
     }
@@ -214,8 +224,14 @@ public class Tournament implements CARE {
     public String getDisqualified()
     {
         String s = "************ Vizier's Disqualified champions********";
-        
-        
+        if (disqualified.isEmpty()) {
+            return null;
+        }
+        else {
+            for (Champion champ : disqualified) {
+                s += "\n" + champ.getName();
+            }
+        }
         return s;
     }
     
