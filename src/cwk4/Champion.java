@@ -29,6 +29,10 @@ public class Champion {
         return state;
     }
 
+    public void setState(ChampionState state){
+        this.state = state;
+    }
+
     public void setSkillLevel(int skillLevel){
         if (skillLevel >= 1  && skillLevel <=10) {
             this.skillLevel = skillLevel;

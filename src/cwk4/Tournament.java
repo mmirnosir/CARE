@@ -143,6 +143,8 @@ public class Tournament implements CARE {
         if (getMoney() >= champsFee) {
             this.treasury -= champsFee;
             viziersTeam.add(getChampion(nme));
+            getChampion(nme).setState(ChampionState.ENTERED);
+            championReserves.remove(getChampion(nme));
             return 0;
         }
         else if (getMoney() < champsFee) {
@@ -161,7 +163,10 @@ public class Tournament implements CARE {
      * is in the vizier's team, false otherwise.
      **/
     public boolean isInViziersTeam(String nme) {
-        return false;
+        if (viziersTeam.contains(getChampion(nme))) {
+            return true;
+        }
+        else return false;
     }
     
     /** Removes a champion from the team back to the reserves (if they are in the team)
@@ -175,7 +180,18 @@ public class Tournament implements CARE {
      **/
     public int retireChampion(String nme)
     {
-        return -1;
+        if (viziersTeam.contains(getChampion(nme))) {
+            viziersTeam.remove(getChampion(nme));
+            getChampion(nme).setState(ChampionState.WAITING);
+            this.treasury += getChampion(nme).getEntryFee()/2;
+            championReserves.add(getChampion(nme));
+
+            return 0;
+        } else if (getChampion(nme).getState() == ChampionState.DISQUALIFIED) {
+            return 1;
+        } else if (!isInViziersTeam(nme)) {
+            return 2;
+        } else return -1;
     }
     
     
@@ -187,7 +203,6 @@ public class Tournament implements CARE {
     public String getTeam()
     {
         String s = "************ Vizier's Team of champions********";
-        
 
         return s;
     }
