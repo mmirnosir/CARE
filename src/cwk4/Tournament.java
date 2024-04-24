@@ -376,6 +376,14 @@ public class Tournament implements CARE {
         }
         return null;
     }
+    public Champion getChampionForChallenge(Challenges chal) {
+        for (Champion viziersTeam : viziersTeam) {
+            if (viziersTeam.getState() == ChampionState.ENTERED && viziersTeam.getskillLevel() >= chal.getSkillRequired()) {
+                return viziersTeam;
+            }
+        }
+        return null; // No suitable champion found
+    }
     // Possible useful private methods
 //     private Challenge getAChallenge(int no)
 //     {
