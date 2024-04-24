@@ -1,6 +1,8 @@
 package cwk4;
 
-public class Champion {
+import java.io.Serializable;
+
+public class Champion implements Serializable {
     private String name;
     private int skillLevel;
     private int entryFee;

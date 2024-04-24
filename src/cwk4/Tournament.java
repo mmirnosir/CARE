@@ -9,14 +9,14 @@ import java.io.*;
  * @version 
  */
 
-public class Tournament implements CARE {
+public class Tournament implements CARE, Serializable {
 
     private String vizier;
     private int treasury;
     private String filename;
     private ArrayList<Champion> championReserves;
     private ArrayList<Challenges> challengesReserves;
-    private ArrayList<Champion> viziersTeam;
+    private ArrayList<Champion> viziersTeam = new ArrayList<>();;
     private ArrayList<Champion> disqualified;
 
 
@@ -141,8 +141,6 @@ public class Tournament implements CARE {
     public int enterChampion(String nme) {
         try {
             int champsFee = getChampion(nme).getEntryFee();
-
-            viziersTeam = new ArrayList<>();
 
             if (getMoney() >= champsFee) {
                 this.treasury -= champsFee;
@@ -452,18 +450,42 @@ public class Tournament implements CARE {
      * @param fname name of file storing the game
      * @return the game (as a Tournament object)
      */
+
     public Tournament loadGame(String fname)
     {   // uses object serialisation 
-       Tournament yyy = null;
-       
-       return yyy;
+
+        try {
+            FileInputStream fileIn = new FileInputStream(fname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Tournament yyy = (Tournament) in.readObject();
+            in.close();
+            fileIn.close();
+
+            return yyy;
+        } catch (Exception e) {
+            System.out.println("[-] Couldn't been able to load the game");
+        }
+        return null;
    } 
    
    /** Writes whole game to the specified file
      * @param fname name of file storing requests
      */
    public void saveGame(String fname){
-        // uses object serialisation 
+        // uses object serialisation
+       try {
+           FileOutputStream fileOut = new FileOutputStream(fname);
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+           out.writeObject(this);
+           out.close();
+           fileOut.close();
+
+           System.out.println("[+] Game has been saved successfully.");
+       } catch (Exception e){
+           System.out.println("[+] Could not save game.");
+           e.printStackTrace();
+       }
         
     }
  
