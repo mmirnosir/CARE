@@ -29,9 +29,10 @@ public class Tournament implements CARE {
      */
     public Tournament(String viz) {
         this.treasury = 1000;
-
+        this.challengesReserves = new ArrayList<>();
         setupChampions();
         setupChallenges();
+
     }
 
     /**
@@ -48,6 +49,7 @@ public class Tournament implements CARE {
 
         setupChampions();
         readChallenges(filename);
+        Tournament tournament = new Tournament("Vizier's Name", "challengesAM.txt");
     }
 
 
@@ -281,7 +283,7 @@ public class Tournament implements CARE {
     /** Provides a String representation of all challenges 
      * @return returns a String representation of all challenges
      **/
-    public String getAllChallenges()
+    /*public String getAllChallenges()
     {
         String s = "\n************ All Challenges ************\n";
         if (challengesReserves.isEmpty()){
@@ -292,10 +294,29 @@ public class Tournament implements CARE {
             }
         }
         return s;
+       }
+   */
+    public String getAllChallenges() {
+        readChallenges("challengesAM.txt");
+        String s = "\n************ All Challenges ************\n";
+        if (challengesReserves.isEmpty()) {
+            s += "No challenges available.";
+            return s;
+        } else {
+            for (Challenges challenge : challengesReserves) {
+
+                s += "\nChallenge No: " + challenge.getChallengeNo() +
+                        ", Type: " + challenge.getType() + ", Enemy: " + challenge.getEnemy() +
+                        ", Skill Required: " + challenge.getSkillRequired() +
+                        ", Reward: " + challenge.getReward();
+            }
+
+            return s;
+        }
     }
-    
-    
-       /** Retrieves the challenge represented by the challenge 
+
+
+    /** Retrieves the challenge represented by the challenge
      * number.Finds a champion from the team who can meet the 
      * challenge. The results of meeting a challenge will be 
      * one of the following:  
@@ -364,10 +385,8 @@ public class Tournament implements CARE {
         challengesReserves.add(new Challenges(10,ChallengeType.FIGHT,"Jute",2,300));
         challengesReserves.add(new Challenges(11,ChallengeType.MAGIC,"Celt",2,250));
         challengesReserves.add(new Challenges(12,ChallengeType.MYSTERY,"Celt",1,250));
-
-
-
     }
+
     private Challenges getAChallenge(int challengeNo) {
         for (Challenges challenge : challengesReserves) {
             if (challenge.getChallengeNo() == (challengeNo)) {
@@ -407,10 +426,38 @@ public class Tournament implements CARE {
      * reads challenges from a comma-separated textfile and stores in the game
      * @param filename of the comma-separated textfile storing information about challenges
      */
-    public void readChallenges(String filename)
-    { 
+    /*public void readChallenges(String filename)
+    {
         
-    }   
+    }*/
+    public void readChallenges(String filename) {
+        challengesReserves = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                //if (data.length < 5) continue; // Skip if data is incomplete
+
+                try {
+                    int challengeNo = challengesReserves.size() + 1; // Generate sequential challenge number
+                    ChallengeType type = ChallengeType.valueOf(data[0].trim().toUpperCase());
+                    String enemy = data[1].trim();
+                    int skillRequired = Integer.parseInt(data[2].trim());
+                    int reward = Integer.parseInt(data[3].trim());
+
+                    challengesReserves.add(new Challenges(challengeNo, type, enemy, skillRequired, reward));
+                } catch (NumberFormatException ex) {
+                    System.out.println("Error parsing integer values: " + ex.getMessage());
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Error with ChallengeType: " + ex.getMessage());
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Error reading file '" + filename + "': " + ex.getMessage());
+        }
+    }
+
+
     
      /** reads all information about the game from the specified file 
      * and returns a CARE reference to a Tournament object, or null
