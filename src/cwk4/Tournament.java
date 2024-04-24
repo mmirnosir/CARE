@@ -139,24 +139,28 @@ public class Tournament implements CARE {
      * @return as shown above
      **/
     public int enterChampion(String nme) {
-        int champsFee = getChampion(nme).getEntryFee();
+        try {
+            int champsFee = getChampion(nme).getEntryFee();
 
-        viziersTeam = new ArrayList<>();
+            viziersTeam = new ArrayList<>();
 
-        if (getMoney() >= champsFee) {
-            this.treasury -= champsFee;
-            viziersTeam.add(getChampion(nme));
-            getChampion(nme).setState(ChampionState.ENTERED);
-            championReserves.remove(getChampion(nme));
-            return 0;
+            if (getMoney() >= champsFee) {
+                this.treasury -= champsFee;
+                viziersTeam.add(getChampion(nme));
+                getChampion(nme).setState(ChampionState.ENTERED);
+                championReserves.remove(getChampion(nme));
+                return 0;
+            }
+            else if (getMoney() < champsFee) {
+                return 2;
+            }
+            else if (!isInReserve(nme)) {
+                return 1;
+            }
+            else return -1;
+        } catch (NullPointerException e) {
+            return -1;
         }
-        else if (getMoney() < champsFee) {
-            return 2;
-        }
-        else if (!isInReserve(nme)) {
-            return 1;
-        }
-        else return -1;
     }
         
      /** Returns true if the champion with the name is in 
@@ -183,18 +187,23 @@ public class Tournament implements CARE {
      **/
     public int retireChampion(String nme)
     {
-        if (viziersTeam.contains(getChampion(nme))) {
-            viziersTeam.remove(getChampion(nme));
-            getChampion(nme).setState(ChampionState.WAITING);
-            this.treasury += getChampion(nme).getEntryFee()/2;
-            championReserves.add(getChampion(nme));
+        try {
+            if (viziersTeam.contains(getChampion(nme))) {
+                viziersTeam.remove(getChampion(nme));
+                getChampion(nme).setState(ChampionState.WAITING);
+                this.treasury += getChampion(nme).getEntryFee()/2;
+                championReserves.add(getChampion(nme));
 
-            return 0;
-        } else if (getChampion(nme).getState() == ChampionState.DISQUALIFIED) {
-            return 1;
-        } else if (!isInViziersTeam(nme)) {
-            return 2;
-        } else return -1;
+                return 0;
+            } else if (getChampion(nme).getState() == ChampionState.DISQUALIFIED) {
+                return 1;
+            } else if (!isInViziersTeam(nme)) {
+                return 2;
+            } else return -1;
+        } catch (NullPointerException e) {
+            return 99;
+        }
+
     }
     
     
@@ -366,6 +375,14 @@ public class Tournament implements CARE {
             }
         }
         return null;
+    }
+    public Champion getChampionForChallenge(Challenges chal) {
+        for (Champion viziersTeam : viziersTeam) {
+            if (viziersTeam.getState() == ChampionState.ENTERED && viziersTeam.getskillLevel() >= chal.getSkillRequired()) {
+                return viziersTeam;
+            }
+        }
+        return null; // No suitable champion found
     }
     // Possible useful private methods
 //     private Challenge getAChallenge(int no)
