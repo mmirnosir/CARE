@@ -349,6 +349,21 @@ public class Tournament implements CARE {
         return null;
    }
 
+    public boolean canMeetChallenge(Champion champion, ChallengeType challengeType) {
+        if (champion instanceof Wizard) {
+            // Wizards can meet any type of challenge
+            return true;
+        } else if (champion instanceof Warrior) {
+            // Warriors can only meet Fight challenges
+            return challengeType == ChallengeType.FIGHT;
+        } else if (champion instanceof Dragon) {
+            Dragon dragon = (Dragon) champion;
+            // Dragons can meet Fight challenges, or Mystery challenges if they talk
+            return challengeType == ChallengeType.FIGHT || (dragon.isTalking() && challengeType == ChallengeType.MYSTERY);
+        }
+        return false;
+    }
+
     private void setupChallenges()
     {
         challengesReserves = new ArrayList<>();
