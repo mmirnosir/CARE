@@ -9,14 +9,14 @@ import java.io.*;
  * @version 
  */
 
-public class Tournament implements CARE {
+public class Tournament implements CARE, Serializable {
 
     private String vizier;
     private int treasury;
     private String filename;
     private ArrayList<Champion> championReserves;
     private ArrayList<Challenges> challengesReserves;
-    private ArrayList<Champion> viziersTeam;
+    private ArrayList<Champion> viziersTeam = new ArrayList<>();;
     private ArrayList<Champion> disqualified;
 
 
@@ -143,8 +143,6 @@ public class Tournament implements CARE {
     public int enterChampion(String nme) {
         try {
             int champsFee = getChampion(nme).getEntryFee();
-
-            viziersTeam = new ArrayList<>();
 
             if (getMoney() >= champsFee) {
                 this.treasury -= champsFee;
@@ -333,10 +331,26 @@ public class Tournament implements CARE {
      */ 
     public int meetChallenge(int chalNo)
     {
-        //Nothing said about accepting challenges when bust
-        int outcome = -1 ;
-        
-        return outcome;
+        Challenges challenge = getAChallenge(chalNo);
+        if (challenge == null) {
+            return -1;
+        }
+
+        Champion champion = getChampionForChallenge(challenge);
+        if (champion == null) {
+            treasury -= challenge.getReward();
+            return treasury >= 0 ? 2 : 3;
+        }
+
+        if (champion.getskillLevel() > challenge.getSkillRequired()) {
+            treasury += challenge.getReward();
+            return 0;
+        } else {
+            treasury -= challenge.getReward();
+            champion.setState(ChampionState.DISQUALIFIED);
+            disqualified.add(champion);
+            return 1;
+        }
     }
  
 
@@ -370,6 +384,23 @@ public class Tournament implements CARE {
         return null;
    }
 
+    public boolean canMeetChallenge(Champion champion, Challenges challenge) {
+        ChallengeType challengeType = challenge.getType();
+
+        if (champion instanceof Wizard) {
+            // Wizards can meet any type of challenge
+            return true;
+        } else if (champion instanceof Warrior) {
+            // Warriors can only meet Fight challenges
+            return challengeType == ChallengeType.FIGHT;
+        } else if (champion instanceof Dragon) {
+            Dragon dragon = (Dragon) champion;
+            // Dragons can meet Fight challenges, or Mystery challenges if they talk
+            return challengeType == ChallengeType.FIGHT || (dragon.isTalking() && challengeType == ChallengeType.MYSTERY);
+        }
+        return false;
+    }
+
     private void setupChallenges()
     {
         challengesReserves = new ArrayList<>();
@@ -397,7 +428,9 @@ public class Tournament implements CARE {
     }
     public Champion getChampionForChallenge(Challenges chal) {
         for (Champion viziersTeam : viziersTeam) {
-            if (viziersTeam.getState() == ChampionState.ENTERED && viziersTeam.getskillLevel() >= chal.getSkillRequired()) {
+            if (viziersTeam.getState() == ChampionState.ENTERED &&
+                    viziersTeam.getskillLevel() >= chal.getSkillRequired() &&
+                    canMeetChallenge(viziersTeam, chal)) {
                 return viziersTeam;
             }
         }
@@ -464,18 +497,42 @@ public class Tournament implements CARE {
      * @param fname name of file storing the game
      * @return the game (as a Tournament object)
      */
+
     public Tournament loadGame(String fname)
     {   // uses object serialisation 
-       Tournament yyy = null;
-       
-       return yyy;
+
+        try {
+            FileInputStream fileIn = new FileInputStream(fname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Tournament yyy = (Tournament) in.readObject();
+            in.close();
+            fileIn.close();
+
+            return yyy;
+        } catch (Exception e) {
+            System.out.println("[-] Couldn't been able to load the game");
+        }
+        return null;
    } 
    
    /** Writes whole game to the specified file
      * @param fname name of file storing requests
      */
    public void saveGame(String fname){
-        // uses object serialisation 
+        // uses object serialisation
+       try {
+           FileOutputStream fileOut = new FileOutputStream(fname);
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+           out.writeObject(this);
+           out.close();
+           fileOut.close();
+
+           System.out.println("[+] Game has been saved successfully.");
+       } catch (Exception e){
+           System.out.println("[+] Could not save game.");
+           e.printStackTrace();
+       }
         
     }
  
