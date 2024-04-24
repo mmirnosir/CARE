@@ -273,7 +273,13 @@ public class Tournament implements CARE {
     public String getAllChallenges()
     {
         String s = "\n************ All Challenges ************\n";
-       
+        if (challengesReserves.isEmpty()){
+            s += "No challenges available.";
+        } else {
+            for (Challenges challenge : challengesReserves) {
+                s += "\n" + challenge.toString();
+            }
+        }
         return s;
     }
     
