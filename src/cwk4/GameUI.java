@@ -21,7 +21,7 @@ public class GameUI
         int result = -1; 
         try
         {
-            System.out.println("Enter vizier's name");
+            System.out.println("Enter vizier's name: ");
             String s = myIn.nextLine();
             //myIn.nextLine();
             tr = new Tournament(s); // create
@@ -40,7 +40,7 @@ public class GameUI
                 }
                 else if (choice == 3)
                 {
-                    System.out.println("Enter Champion name");
+                    System.out.println("Enter Champion name: ");
                     String ref = (myIn.nextLine()).trim();
                     System.out.println(tr.getChampionDetails(ref));
                 } 
@@ -73,8 +73,24 @@ public class GameUI
                 }
                 else if (choice==6)
                 {
-                    // provide code here
-                    // output should be meaningful
+                    System.out.println("Enter the champion name who you would like to retire: ");
+                    String name = (myIn.nextLine()).trim();
+
+                    switch(tr.retireChampion(name)) {
+                        case 0:
+                            System.out.println("[+] Champion has been retired to the reserves");
+                            break;
+                        case 1:
+                            System.out.println("[-] Champion is disqualified and can't be retired");
+                            break;
+                        case 2:
+                            System.out.println("[-] Champion is not in the team and can't be retired");
+                            break;
+                        case -1:
+                            System.out.println("[-] Champion doesn't exist");
+                        case 99:
+                            System.out.println("[-] Viziers team is empty");
+                    }
                 }  
                 else if (choice==7)
                 {
