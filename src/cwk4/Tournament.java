@@ -98,7 +98,7 @@ public class Tournament implements CARE, Serializable {
         }
         else {
             for (Champion champ : championReserves) {
-                s += "\n" + champ.getName();
+                s += "\n" + champ.toString();
             }
         }
         return s;
@@ -328,6 +328,7 @@ public class Tournament implements CARE, Serializable {
             treasury -= challenge.getReward();
             champion.setState(ChampionState.DISQUALIFIED);
             disqualified.add(champion);
+            championReserves.remove(champion);
             return 1;
         }
     }

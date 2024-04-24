@@ -11,7 +11,7 @@ public class Warrior extends Champion {
 
     public String toString(){
         return super.toString() +
-                "Weapon: " + weapon;
+                "\nWeapon: " + weapon;
     }
 
 }

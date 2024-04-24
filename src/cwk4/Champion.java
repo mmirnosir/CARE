@@ -10,7 +10,7 @@ public class Champion implements Serializable {
 
     public Champion(String name, int skillLevel, int entryFee) {
         this.name = name;
-        this.skillLevel = Math.min(Math.max(entryFee, 1), 10);
+        this.skillLevel = Math.min(Math.max(skillLevel, 1), 10);
         this.entryFee = entryFee;
         this.state = ChampionState.WAITING;
     }
@@ -42,10 +42,10 @@ public class Champion implements Serializable {
     }
 
     public String toString(){
-        return "Name: " + getName() +
+        return "\nName: " + getName() +
                 "\nSKill level: " + getskillLevel() +
                 "\nEntry fee: " + getEntryFee() +
-                "Champion state: " + getState();
+                "\nChampion state: " + getState();
     }
 
 }
