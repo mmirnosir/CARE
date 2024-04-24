@@ -312,10 +312,26 @@ public class Tournament implements CARE {
      */ 
     public int meetChallenge(int chalNo)
     {
-        //Nothing said about accepting challenges when bust
-        int outcome = -1 ;
-        
-        return outcome;
+        Challenges challenge = getAChallenge(chalNo);
+        if (challenge == null) {
+            return -1;
+        }
+
+        Champion champion = getChampionForChallenge(challenge);
+        if (champion == null) {
+            treasury -= challenge.getReward();
+            return treasury >= 0 ? 2 : 3;
+        }
+
+        if (champion.getskillLevel() > challenge.getSkillRequired()) {
+            treasury += challenge.getReward();
+            return 0;
+        } else {
+            treasury -= challenge.getReward();
+            champion.setState(ChampionState.DISQUALIFIED);
+            disqualified.add(champion);
+            return 1;
+        }
     }
  
 
@@ -349,7 +365,9 @@ public class Tournament implements CARE {
         return null;
    }
 
-    public boolean canMeetChallenge(Champion champion, ChallengeType challengeType) {
+    public boolean canMeetChallenge(Champion champion, Challenges challenge) {
+        ChallengeType challengeType = challenge.getType();
+
         if (champion instanceof Wizard) {
             // Wizards can meet any type of challenge
             return true;
@@ -393,7 +411,9 @@ public class Tournament implements CARE {
     }
     public Champion getChampionForChallenge(Challenges chal) {
         for (Champion viziersTeam : viziersTeam) {
-            if (viziersTeam.getState() == ChampionState.ENTERED && viziersTeam.getskillLevel() >= chal.getSkillRequired()) {
+            if (viziersTeam.getState() == ChampionState.ENTERED &&
+                    viziersTeam.getskillLevel() >= chal.getSkillRequired() &&
+                    canMeetChallenge(viziersTeam, chal)) {
                 return viziersTeam;
             }
         }
