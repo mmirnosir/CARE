@@ -203,36 +203,25 @@ public class Tournament implements CARE, Serializable {
      * 2 - if champion not retired because not in team
      * -1 - if no such champion
      * @param nme is the name of the champion
-     * @return as shown above 
+     * @return as shown above
      **/
     public int retireChampion(String nme)
     {
-
-        for (Champion champ: viziersTeam) {
-
-            if (champ.getName().equals(nme)) {
-                champ.setState(ChampionState.WAITING);
-                this.treasury += champ.getEntryFee()/2;
-                championReserves.add(champ);
-                viziersTeam.remove(champ);
-
-                return 0;
-            }
-            else if (champ.getState() == ChampionState.DISQUALIFIED) {
-                return 1;
-            }
-            else if (getChampion(nme) == null) {
-                return -1;
-            }
-            else if (!isInViziersTeam(nme)) {
-                return 2;
-            }
-            else {
-                continue;
-            }
+        Champion champ = getChampion(nme);
+        if (champ == null){
+            return -1;
+        } else if (disqualified.contains(champ)) {
+            return 1;
+        } else if (!viziersTeam.contains(champ)) {
+            return 2;
+        } else {
+            champ.setState(ChampionState.WAITING);
+            this.treasury += champ.getEntryFee()/2;
+            championReserves.add(champ);
+            viziersTeam.remove(champ);
+            return 0;
         }
 
-        return -1;
     }
     
         
