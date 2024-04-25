@@ -68,7 +68,7 @@ public class Tournament implements CARE, Serializable {
      * team,(or, "No champions" if team is empty)
      **/
     public String toString() {
-        String s = "\nVizier: " + vizier + "\nTreasury: " + treasury + "\nDefeated: " + isDefeated() +
+        String s = "\nVizier: " + vizier + "\nTreasury: " + String.valueOf(treasury) + "\nDefeated: " + isDefeated() +
                 "\nChampions: " + getTeam();
 
         return s;
@@ -81,7 +81,11 @@ public class Tournament implements CARE, Serializable {
      * champions which can be retired. 
      */
     public boolean isDefeated() {
-        return this.treasury <= 0 && this.getReserve() == null;
+
+        if (this.treasury <= 0 && this.viziersTeam.isEmpty()) {
+            return true;
+        }
+        return false;
     }
     
     /** returns the amount of money in the Treasury
@@ -211,6 +215,9 @@ public class Tournament implements CARE, Serializable {
             else if (!isInViziersTeam(nme)) {
                 return 2;
             }
+            else if (getChampion(nme) == null) {
+                return -1;
+            }
             else {
                 continue;
             }
@@ -229,7 +236,7 @@ public class Tournament implements CARE, Serializable {
         String s = "************ Vizier's Team of champions********";
         // Check if the vizier's team is empty
         if (viziersTeam.isEmpty()) {
-            s += "\nNo champions entered";  // Append message if no champions are in the team
+            s = "\nNo champions";  // Append message if no champions are in the team
         } else {
             // Iterate through each champion in the team and append their details
             for (Champion champion : viziersTeam) {
