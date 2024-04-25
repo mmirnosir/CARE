@@ -354,7 +354,7 @@ public class Tournament implements CARE, Serializable {
             treasury -= challenge.getReward();
             champion.setState(ChampionState.DISQUALIFIED);
             disqualified.add(champion);
-            championReserves.remove(champion);
+            viziersTeam.remove(champion);
             return 1;
         }
     }
