@@ -13,6 +13,7 @@ public class Dragon extends Champion {
     }
     public String toString(){
         return super.toString() +
-                "Talking: " + isTalking;
+                "\nTalking: " + isTalking +
+                "\nType: Dragon";
     }
 }

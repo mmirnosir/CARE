@@ -382,6 +382,19 @@ public class Tournament implements CARE, Serializable {
                 return champion;
             }
         }
+
+       for (Champion champion : viziersTeam) {
+           if (champion.getName().equals(name)) {
+               return champion;
+           }
+       }
+
+       for (Champion champion : disqualified) {
+           if (champion.getName().equals(name)) {
+               return champion;
+           }
+       }
+
         return null;
    }
 
