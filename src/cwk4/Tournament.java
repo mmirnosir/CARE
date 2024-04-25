@@ -212,11 +212,11 @@ public class Tournament implements CARE, Serializable {
             else if (champ.getState() == ChampionState.DISQUALIFIED) {
                 return 1;
             }
-            else if (!isInViziersTeam(nme)) {
-                return 2;
-            }
             else if (getChampion(nme) == null) {
                 return -1;
+            }
+            else if (!isInViziersTeam(nme)) {
+                return 2;
             }
             else {
                 continue;
