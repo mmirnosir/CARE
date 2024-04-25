@@ -68,8 +68,21 @@ public class GameUI
                 }
                 else if (choice == 5)
                 {
-                    // provide code here
-                    // output should be meaningful
+                    System.out.println("Enter the challenge number you would like to enter: ");
+                    int challengeNo = (myIn.nextInt());
+
+                    switch (tr.meetChallenge(challengeNo)) {
+                        case 0:
+                            System.out.println("[+] Challenge won by champion");
+                        case 1:
+                            System.out.println("[-] Challenge lost on skills");
+                        case 2:
+                            System.out.println("[-] Challenge lost. No suitable champion");
+                        case 3:
+                            System.out.println("[-] You lost. The game is over.");
+                        case -1:
+                            System.out.println("[-] No such challenge");
+                    }
                 }
                 else if (choice==6)
                 {
@@ -94,7 +107,7 @@ public class GameUI
                 }  
                 else if (choice==7)
                 {
-                    // provide code here
+
                 }
                 else if (choice==8)
                 {
