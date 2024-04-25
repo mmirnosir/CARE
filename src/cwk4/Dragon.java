@@ -15,6 +15,7 @@ public class Dragon extends Champion implements Serializable {
     }
     public String toString(){
         return super.toString() +
-                "Talking: " + isTalking;
+                "\nTalking: " + isTalking +
+                "\nType: Dragon";
     }
 }

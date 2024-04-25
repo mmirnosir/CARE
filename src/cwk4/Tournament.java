@@ -19,7 +19,7 @@ public class Tournament implements CARE, Serializable {
     private ArrayList<Champion> championReserves;
     private ArrayList<Challenges> challengesReserves;
     private ArrayList<Champion> viziersTeam = new ArrayList<>();;
-    private ArrayList<Champion> disqualified;
+    private ArrayList<Champion> disqualified = new ArrayList<>();
 
 
 //**************** CARE ************************** 
@@ -103,7 +103,7 @@ public class Tournament implements CARE, Serializable {
         }
         else {
             for (Champion champ : championReserves) {
-                s += "\n" + champ.getName();
+                s += "\n" + champ.toString();
             }
         }
         return s;
@@ -145,22 +145,26 @@ public class Tournament implements CARE, Serializable {
      **/
     public int enterChampion(String nme) {
         try {
-            int champsFee = getChampion(nme).getEntryFee();
+            Champion champion = getChampion(nme);
+            if (champion == null) {
+                return -1;
+            }
 
-            if (getMoney() >= champsFee) {
-                this.treasury -= champsFee;
-                viziersTeam.add(getChampion(nme));
-                getChampion(nme).setState(ChampionState.ENTERED);
-                championReserves.remove(getChampion(nme));
-                return 0;
-            }
-            else if (getMoney() < champsFee) {
-                return 2;
-            }
-            else if (!isInReserve(nme)) {
+            if (!championReserves.contains(champion)) {
                 return 1;
             }
-            else return -1;
+
+            int champsFee = champion.getEntryFee();
+            if (getMoney() < champsFee) {
+                return 2;
+            }
+
+            treasury -= champsFee;
+            champion.setState(ChampionState.ENTERED); // Assuming ChampionState.ENTERED represents "active"
+            viziersTeam.add(champion); // Add the champion to the vizier's team
+            championReserves.remove(champion); // Remove the champion from the reserves
+
+            return 0;
         } catch (NullPointerException e) {
             return -1;
         }
@@ -344,7 +348,8 @@ public class Tournament implements CARE, Serializable {
             return -1;
         }
 
-        Champion champion = getChampionForChallenge(challenge);
+//        Champion champion = getChampionForChallenge(challenge);
+        Champion champion = viziersTeam.get(0);
         if (champion == null) {
             treasury -= challenge.getReward();
             return treasury >= 0 ? 2 : 3;
@@ -357,6 +362,7 @@ public class Tournament implements CARE, Serializable {
             treasury -= challenge.getReward();
             champion.setState(ChampionState.DISQUALIFIED);
             disqualified.add(champion);
+            viziersTeam.remove(champion);
             return 1;
         }
     }
@@ -389,6 +395,19 @@ public class Tournament implements CARE, Serializable {
                 return champion;
             }
         }
+
+       for (Champion champion : viziersTeam) {
+           if (champion.getName().equals(name)) {
+               return champion;
+           }
+       }
+
+       for (Champion champion : disqualified) {
+           if (champion.getName().equals(name)) {
+               return champion;
+           }
+       }
+
         return null;
    }
 

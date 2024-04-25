@@ -13,7 +13,8 @@ public class Warrior extends Champion implements Serializable {
 
     public String toString(){
         return super.toString() +
-                "Weapon: " + weapon;
+                "\nWeapon: " + weapon +
+                "\nType: Warrior";
     }
 
 }
