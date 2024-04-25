@@ -142,22 +142,26 @@ public class Tournament implements CARE, Serializable {
      **/
     public int enterChampion(String nme) {
         try {
-            int champsFee = getChampion(nme).getEntryFee();
+            Champion champion = getChampion(nme);
+            if (champion == null) {
+                return -1;
+            }
 
-            if (getMoney() >= champsFee) {
-                this.treasury -= champsFee;
-                viziersTeam.add(getChampion(nme));
-                getChampion(nme).setState(ChampionState.ENTERED);
-                championReserves.remove(getChampion(nme));
-                return 0;
-            }
-            else if (getMoney() < champsFee) {
-                return 2;
-            }
-            else if (!isInReserve(nme)) {
+            if (!championReserves.contains(champion)) {
                 return 1;
             }
-            else return -1;
+
+            int champsFee = champion.getEntryFee();
+            if (getMoney() < champsFee) {
+                return 2;
+            }
+
+            treasury -= champsFee;
+            champion.setState(ChampionState.ENTERED); // Assuming ChampionState.ENTERED represents "active"
+            viziersTeam.add(champion); // Add the champion to the vizier's team
+            championReserves.remove(champion); // Remove the champion from the reserves
+
+            return 0;
         } catch (NullPointerException e) {
             return -1;
         }
