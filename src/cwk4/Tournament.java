@@ -68,7 +68,16 @@ public class Tournament implements CARE, Serializable {
      * team,(or, "No champions" if team is empty)
      **/
     public String toString() {
-        String s = "\nVizier: " + vizier + "\nTreasury: " + String.valueOf(treasury) + "\nDefeated: " + isDefeated() +
+
+        String defeated;
+
+        if (isDefeated()) {
+            defeated = "Defeated";
+        } else {
+            defeated = "Is OK";
+        }
+
+        String s = "\nVizier: " + vizier + "\nTreasury: " + String.valueOf(treasury) + "\nDefeated: " + defeated +
                 "\nChampions: " + getTeam();
 
         return s;
