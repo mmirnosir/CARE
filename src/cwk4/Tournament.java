@@ -354,22 +354,24 @@ public class Tournament implements CARE, Serializable {
         }
 
 //        Champion champion = getChampionForChallenge(challenge);
-        Champion champion = viziersTeam.get(0);
-        if (canMeetChallenge(champion, challenge)){
-            if (champion == null) {
-                treasury -= challenge.getReward();
-                return treasury >= 0 ? 2 : 3;
-            }
+//        Champion champion = viziersTeam.get(0);
+        for (Champion champion : viziersTeam){
+            if (canMeetChallenge(champion, challenge)){
+                if (champion == null) {
+                    treasury -= challenge.getReward();
+                    return treasury >= 0 ? 2 : 3;
+                }
 
-            if (champion.getskillLevel() > challenge.getSkillRequired()) {
-                treasury += challenge.getReward();
-                return 0;
-            } else {
-                treasury -= challenge.getReward();
-                champion.setState(ChampionState.DISQUALIFIED);
-                disqualified.add(champion);
-                viziersTeam.remove(champion);
-                return 1;
+                if (champion.getskillLevel() > challenge.getSkillRequired()) {
+                    treasury += challenge.getReward();
+                    return 0;
+                } else {
+                    treasury -= challenge.getReward();
+                    champion.setState(ChampionState.DISQUALIFIED);
+                    disqualified.add(champion);
+                    viziersTeam.remove(champion);
+                    return 1;
+                }
             }
         }
         treasury -= challenge.getReward();
