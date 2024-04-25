@@ -15,6 +15,8 @@ public class Champion implements Serializable {
         this.state = ChampionState.WAITING;
     }
 
+    public Champion() {}
+
     public String getName(){
         return name;
     }

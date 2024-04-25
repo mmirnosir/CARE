@@ -9,8 +9,7 @@ import java.io.*;
  * @version 01/03/2024
  */
  
-public interface CARE extends Serializable 
-{
+public interface CARE extends Serializable {
  //**************** CARE **************************  
     
     /**Returns a String representation of the state of the game,

@@ -1,6 +1,8 @@
 package cwk4;
 
-public class Warrior extends Champion {
+import java.io.Serializable;
+
+public class Warrior extends Champion implements Serializable {
     private String weapon;
 
     public Warrior (String name, int entryFee, String weapon){

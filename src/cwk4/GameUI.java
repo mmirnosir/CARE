@@ -112,6 +112,13 @@ public class GameUI
                     System.out.println("Restore from file");
                     System.out.println("Enter file name");
                     String filename = myIn.nextLine();
+
+//                    System.out.println(filename);
+//                    if (filename.isEmpty()) {
+//                        System.out.println("[-] File name is empty");
+//                        filename = myIn.nextLine();
+//                    }
+
                     CARE tr2= tr.loadGame(filename);
                     if (tr2 != null)
                     {

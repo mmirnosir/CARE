@@ -1,4 +1,6 @@
 package cwk4;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 /**
@@ -11,7 +13,7 @@ import java.io.*;
 
 public class Tournament implements CARE, Serializable {
 
-    private String vizier;
+    final String vizier;
     private int treasury;
     private String filename;
     private ArrayList<Champion> championReserves;
@@ -29,6 +31,7 @@ public class Tournament implements CARE, Serializable {
      */
     public Tournament(String viz) {
         this.treasury = 1000;
+        this.vizier = viz; // Added viziers name. Needed for saveGame and loadGame.
         this.challengesReserves = new ArrayList<>();
         setupChampions();
         setupChallenges();
@@ -187,25 +190,30 @@ public class Tournament implements CARE, Serializable {
      **/
     public int retireChampion(String nme)
     {
-        try {
-            if (viziersTeam.contains(getChampion(nme))) {
-                viziersTeam.remove(getChampion(nme));
-                getChampion(nme).setState(ChampionState.WAITING);
-                this.treasury += getChampion(nme).getEntryFee()/2;
-                championReserves.add(getChampion(nme));
+
+        for (Champion champ: viziersTeam) {
+
+            if (champ.getName().equals(nme)) {
+                champ.setState(ChampionState.WAITING);
+                this.treasury += champ.getEntryFee()/2;
+                championReserves.add(champ);
+                viziersTeam.remove(champ);
 
                 return 0;
-            } else if (getChampion(nme).getState() == ChampionState.DISQUALIFIED) {
+            }
+            else if (champ.getState() == ChampionState.DISQUALIFIED) {
                 return 1;
-            } else if (!isInViziersTeam(nme)) {
+            }
+            else if (!isInViziersTeam(nme)) {
                 return 2;
-            } else return -1;
-        } catch (NullPointerException e) {
-            return 99;
+            }
+            else {
+                continue;
+            }
         }
 
+        return -1;
     }
-    
     
         
     /**Returns a String representation of the champions in the vizier's team
@@ -501,24 +509,44 @@ public class Tournament implements CARE, Serializable {
     public Tournament loadGame(String fname)
     {   // uses object serialisation 
 
-        try {
-            FileInputStream fileIn = new FileInputStream(fname);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            Tournament yyy = (Tournament) in.readObject();
-            in.close();
-            fileIn.close();
+        try (FileInputStream fileIn = new FileInputStream(fname);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
 
-            return yyy;
-        } catch (Exception e) {
-            System.out.println("[-] Couldn't been able to load the game");
+            // Read the object from the byte stream
+            Tournament obj = (Tournament) in.readObject();
+
+            // Use the deserialized object
+            System.out.println(obj.toString());
+
+            return obj;
+
+        } catch (IOException | ClassNotFoundException e) {
+            // Handle exceptions like file not found or incompatible class definition
+            e.printStackTrace();
         }
-        return null;
-   } 
+
+    return null;}
+
+//        try {
+//            FileInputStream fileIn = new FileInputStream(fname);
+//            ObjectInputStream in = new ObjectInputStream(fileIn);
+//            Tournament yyy = (Tournament) in.readObject();
+//
+//            System.out.println(yyy.toString());
+//
+//            in.close();
+//            fileIn.close();
+//            return yyy;
+//        } catch (Exception e) {
+//            System.out.println("[-] Couldn't been able to load the game");
+//        }
+//        return null;
+
    
    /** Writes whole game to the specified file
      * @param fname name of file storing requests
      */
-   public void saveGame(String fname){
+   public void saveGame(String fname) {
         // uses object serialisation
        try {
            FileOutputStream fileOut = new FileOutputStream(fname);
@@ -529,11 +557,10 @@ public class Tournament implements CARE, Serializable {
            fileOut.close();
 
            System.out.println("[+] Game has been saved successfully.");
-       } catch (Exception e){
+       } catch (IOException e){
            System.out.println("[+] Could not save game.");
            e.printStackTrace();
        }
-        
     }
  
 

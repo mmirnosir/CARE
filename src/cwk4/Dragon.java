@@ -1,6 +1,8 @@
 package cwk4;
 
-public class Dragon extends Champion {
+import java.io.Serializable;
+
+public class Dragon extends Champion implements Serializable {
     private boolean isTalking;
 
     public Dragon (String name, boolean isTalking){
