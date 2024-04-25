@@ -17,7 +17,7 @@ public class Tournament implements CARE, Serializable {
     private ArrayList<Champion> championReserves;
     private ArrayList<Challenges> challengesReserves;
     private ArrayList<Champion> viziersTeam = new ArrayList<>();;
-    private ArrayList<Champion> disqualified;
+    private ArrayList<Champion> disqualified = new ArrayList<>();
 
 
 //**************** CARE ************************** 
@@ -340,7 +340,8 @@ public class Tournament implements CARE, Serializable {
             return -1;
         }
 
-        Champion champion = getChampionForChallenge(challenge);
+//        Champion champion = getChampionForChallenge(challenge);
+        Champion champion = viziersTeam.get(0);
         if (champion == null) {
             treasury -= challenge.getReward();
             return treasury >= 0 ? 2 : 3;
