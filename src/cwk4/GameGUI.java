@@ -59,6 +59,9 @@ public class GameGUI
         // building is done - arrange the components and show        
         myFrame.pack();
         myFrame.setVisible(true);
+
+        // Set the size of the frame before making it visible
+        myFrame.setSize(800, 600);  // Set the width to 800 pixels and the height to 600 pixels
     }
     
     /**
