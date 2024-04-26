@@ -38,9 +38,13 @@ public class GameGUI
      * Create the Swing frame and its content.
      */
     private void makeFrame()
-    {    
+    {
+        JScrollPane scrollPane = new JScrollPane(listing);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
         myFrame.setLayout(new BorderLayout());
-        myFrame.add(listing,BorderLayout.CENTER);
+        myFrame.add(scrollPane, BorderLayout.CENTER);
         listing.setVisible(false);
         myFrame.add(eastPanel, BorderLayout.EAST);
         // set panel layout and add components
