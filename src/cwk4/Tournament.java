@@ -22,6 +22,9 @@ public class Tournament implements CARE, Serializable {
     private ArrayList<Champion> disqualified = new ArrayList<>();
 
 
+    private int allChampsfee;
+
+
 //**************** CARE ************************** 
 
     /**
@@ -348,15 +351,29 @@ public class Tournament implements CARE, Serializable {
      */ 
     public int meetChallenge(int chalNo)
     {
+
         Challenges challenge = getAChallenge(chalNo);
         if (challenge == null) {
             return -1;
         }
 
+        if (this.viziersTeam.isEmpty() && getMoney() <= 0) {
+            return 3;
+        }
+
+//        if (allChampsfee + this.treasury <= 0) {
+//            return 3;
+//        }
+
+
 //        Champion champion = getChampionForChallenge(challenge);
 //        Champion champion = viziersTeam.get(0);
         for (Champion champion : viziersTeam){
+
+
+
             if (canMeetChallenge(champion, challenge)){
+
                 if (champion == null) {
                     treasury -= challenge.getReward();
                     return treasury >= 0 ? 2 : 3;
@@ -372,9 +389,17 @@ public class Tournament implements CARE, Serializable {
                     viziersTeam.remove(champion);
                     return 1;
                 }
+
             }
+            allChampsfee = champion.getEntryFee()/2;
         }
+
         treasury -= challenge.getReward();
+
+        if ((allChampsfee + treasury) < 0 && this.viziersTeam.isEmpty()) {
+            return 3;
+        }
+
         return 2;
     }
  

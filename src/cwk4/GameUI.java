@@ -107,7 +107,7 @@ public class GameUI
                 }  
                 else if (choice==7)
                 {
-
+                    System.out.println(tr.toString());
                 }
                 else if (choice==8)
                 {

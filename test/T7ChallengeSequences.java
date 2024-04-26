@@ -141,7 +141,7 @@ public class T7ChallengeSequences {
         game.retireChampion("Flimsi"); //no one in Team
         game.meetChallenge(4);  //lose as no one available
         int actual = game.meetChallenge(4);  //lose as no one available
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
     }
     
     @Test
