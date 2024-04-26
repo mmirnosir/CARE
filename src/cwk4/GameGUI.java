@@ -81,6 +81,14 @@ public class GameGUI
         listTeamItem.addActionListener(new ListTeamHandler());
         championMenu.add(listTeamItem);
 
+
+        // challenges
+        JMenu challengesMenu = new JMenu("Challenges");
+        menubar.add(challengesMenu);
+
+        JMenuItem listChallengesItem = new JMenuItem("List Challenges");
+        listChallengesItem.addActionListener(new ListChallengesHandler());
+        challengesMenu.add(listChallengesItem);
  
     }
     
@@ -91,6 +99,14 @@ public class GameGUI
             listing.setVisible(true);
             String xx = gp.getReserve();
             listing.setText(xx);
+        }
+    }
+
+    private class ListChallengesHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            listing.setVisible(true);
+            String yy = gp.getAllChallenges();
+            listing.setText(yy);
         }
     }
 
