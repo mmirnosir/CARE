@@ -88,6 +88,10 @@ public class GameGUI
         viewChampionItem.addActionListener(new viewChampionHandler());
         championMenu.add(viewChampionItem);
 
+        JMenuItem enterChampionItem = new JMenuItem("Enter Champion");
+        enterChampionItem.addActionListener(new enterChampionHandler());
+        championMenu.add(enterChampionItem);
+
 
         // challenges
         JMenu challengesMenu = new JMenu("Challenges");
@@ -106,6 +110,25 @@ public class GameGUI
             String inputValue = JOptionPane.showInputDialog("Champion name ?: ");
             String result = gp.getChampionDetails(inputValue);
             JOptionPane.showMessageDialog(myFrame,result);
+        }
+    }
+
+    private class enterChampionHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            int result = -1;
+            String answer = "no such champion";
+            String inputValue = JOptionPane.showInputDialog("Enter a champion: ");
+            result = gp.enterChampion(inputValue);
+            switch (result)
+            {
+                case 0:answer = "Champion has entered the viziers team"; break;
+                case 1:answer = "Champion is not in reserve";break;
+                case 2:answer = "Not enough money in the treasury";break;
+            }
+
+            JOptionPane.showMessageDialog(myFrame,answer);
         }
     }
 
