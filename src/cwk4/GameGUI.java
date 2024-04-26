@@ -77,6 +77,10 @@ public class GameGUI
         listChampionItem.addActionListener(new ListReserveHandler());
         championMenu.add(listChampionItem);
 
+        JMenuItem listTeamItem = new JMenuItem("List Champions in Team");
+        listTeamItem.addActionListener(new ListTeamHandler());
+        championMenu.add(listTeamItem);
+
  
     }
     
@@ -86,6 +90,16 @@ public class GameGUI
         { 
             listing.setVisible(true);
             String xx = gp.getReserve();
+            listing.setText(xx);
+        }
+    }
+
+    private class ListTeamHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            listing.setVisible(true);
+            String xx = gp.getTeam();
             listing.setText(xx);
         }
     }
