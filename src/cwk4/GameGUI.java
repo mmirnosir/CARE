@@ -81,6 +81,10 @@ public class GameGUI
         listTeamItem.addActionListener(new ListTeamHandler());
         championMenu.add(listTeamItem);
 
+        JMenuItem viewChampionItem = new JMenuItem("View Champion");
+        viewChampionItem.addActionListener(new viewChampionHandler());
+        championMenu.add(viewChampionItem);
+
 
         // challenges
         JMenu challengesMenu = new JMenu("Challenges");
@@ -91,7 +95,17 @@ public class GameGUI
         challengesMenu.add(listChallengesItem);
  
     }
-    
+
+    private class viewChampionHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            String inputValue = JOptionPane.showInputDialog("Champion name ?: ");
+            String result = gp.getChampionDetails(inputValue);
+            JOptionPane.showMessageDialog(myFrame,result);
+        }
+    }
+
     private class ListReserveHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e) 
