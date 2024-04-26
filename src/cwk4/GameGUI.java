@@ -20,6 +20,7 @@ public class GameGUI
     private JButton viewBtn = new JButton("View State");
     private JButton clearBtn = new JButton("Clear");
     private JButton quitBtn = new JButton("Quit");
+    private JButton gameState = new JButton("View Game State");
     private JPanel eastPanel = new JPanel();
 
     public static void main(String[] args)
@@ -48,10 +49,12 @@ public class GameGUI
         eastPanel.add(meetBtn);
         eastPanel.add(clearBtn);
         eastPanel.add(quitBtn);
+        eastPanel.add(gameState);
         
         clearBtn.addActionListener(new ClearBtnHandler());
         meetBtn.addActionListener(new MeetBtnHandler());
         quitBtn.addActionListener(new QuitBtnHandler());
+        gameState.addActionListener(new GameBtnHandler());
         
         meetBtn.setVisible(true);
         clearBtn.setVisible(true);
@@ -202,6 +205,15 @@ public class GameGUI
             {
                 System.exit(0); //closes the application
             }              
+        }
+    }
+
+    private class GameBtnHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) {
+            listing.setVisible(true);
+            String result = gp.toString();
+            listing.setText(result);
         }
     }
     
